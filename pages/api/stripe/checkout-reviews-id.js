@@ -1,11 +1,13 @@
 import stripe from "../../../lib/stripe";
+import { resolveRefCode } from "../../../lib/referral";
 
 const PRECIO_UNIDAD = 800;
 const MINIMO = 5;
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end();
-  const { email, package: cantidad, targetId, ref } = req.body || {};
+  const { email, package: cantidad, targetId, ref: refFromBody } = req.body || {};
+  const ref = await resolveRefCode(req, refFromBody);
   const n = Number(cantidad);
 
   if (!email || !/^\S+@\S+\.\S+$/.test(email)) {

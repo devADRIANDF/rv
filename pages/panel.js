@@ -6,6 +6,7 @@ import Nav from "../components/Nav";
 export default function Panel() {
   const [user, setUser] = useState(null);
   const [stats, setStats] = useState(null);
+  const [pedidos, setPedidos] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const router = useRouter();
 
@@ -15,16 +16,14 @@ export default function Panel() {
       .then((d) => {
         if (!d.user) return router.replace("/login");
         setUser(d.user);
-        fetch("/api/referidos/stats")
-          .then((r) => r.json())
-          .then((s) => {
-            setStats(s);
-            setLoaded(true);
-          })
-          .catch(() => {
-            setStats({});
-            setLoaded(true);
-          });
+        Promise.all([
+          fetch("/api/referidos/stats").then((r) => r.json()).catch(() => ({})),
+          fetch("/api/pedidos/mios").then((r) => r.json()).catch(() => ({ pedidos: [] })),
+        ]).then(([s, p]) => {
+          setStats(s);
+          setPedidos(Array.isArray(p?.pedidos) ? p.pedidos : []);
+          setLoaded(true);
+        });
       })
       .catch(() => router.replace("/login"));
   }, [router]);
@@ -114,6 +113,44 @@ export default function Panel() {
             <p className="mt-2 text-xs text-mist">
               Código {referralCode} · ganas el 10% de cada compra de quien invites
             </p>
+          </div>
+
+          <div className="mt-8">
+            <p className="text-xs font-600 uppercase tracking-wide text-mist">Tus pedidos</p>
+            <div className="mt-3 overflow-hidden rounded-2xl border border-line bg-surface">
+              {pedidos.length === 0 ? (
+                <p className="px-5 py-8 text-sm text-mist">Aún no has hecho ningún pedido.</p>
+              ) : (
+                pedidos.map((p) => (
+                  <div
+                    key={p.id}
+                    className="flex items-center justify-between border-b border-line px-5 py-3 last:border-0"
+                  >
+                    <div>
+                      <p className="text-sm text-ink">
+                        {p.type === "cuenta" ? "Cuenta lista" : "Reviews a tu ID"} · {p.package} reviews
+                        {p.target_id ? ` · ID ${p.target_id}` : ""}
+                      </p>
+                      <p className="text-xs text-mist">{new Date(p.created_at).toLocaleString("es-ES")}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-600 text-ink">{(p.amount_cents / 100).toFixed(2)} €</p>
+                      <span
+                        className={`rounded-full px-2 py-0.5 text-[11px] font-600 capitalize ${
+                          p.status === "entregado"
+                            ? "bg-tealSoft text-tealDark"
+                            : p.status === "cancelado"
+                            ? "bg-red-100 text-red-600"
+                            : "bg-amber-100 text-amber-700"
+                        }`}
+                      >
+                        {p.status}
+                      </span>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
 
           <div className="mt-8">

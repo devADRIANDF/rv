@@ -1,4 +1,5 @@
 import stripe from "../../../lib/stripe";
+import { resolveRefCode } from "../../../lib/referral";
 
 const PRECIOS_CUENTA = { 5: 5000, 10: 9000, 15: 12500, 20: 16000 };
 const PRECIO_EXTRA_CUENTA = 900; // 9 € por review por encima del tramo (cuota de alta)
@@ -16,7 +17,8 @@ function calcularAltaCuenta(n) {
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).end();
-  const { email, type, targetId, reviewsPerMonth, ref } = req.body || {};
+  const { email, type, targetId, reviewsPerMonth, ref: refFromBody } = req.body || {};
+  const ref = await resolveRefCode(req, refFromBody);
   const n = Number(reviewsPerMonth);
 
   if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
