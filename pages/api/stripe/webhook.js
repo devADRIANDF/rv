@@ -37,14 +37,14 @@ export default async function handler(req, res) {
 
     try {
       if (meta.order_type === "cuenta") {
-        crearPedidoCuentaPagado({
+        await crearPedidoCuentaPagado({
           email: meta.email,
           totalReviews: Number(meta.total_reviews),
           amountCents: Number(meta.amount_cents),
           refCode: meta.ref,
         });
       } else if (meta.order_type === "reviews_id") {
-        crearPedidoReviewsIdPagado({
+        await crearPedidoReviewsIdPagado({
           email: meta.email,
           cantidad: Number(meta.cantidad),
           targetId: meta.target_id,
@@ -52,7 +52,7 @@ export default async function handler(req, res) {
           refCode: meta.ref,
         });
       } else if (meta.order_type === "wallet") {
-        acreditarSaldoPagado({
+        await acreditarSaldoPagado({
           userId: Number(meta.user_id),
           amountCents: Number(meta.amount_cents),
         });
@@ -61,7 +61,7 @@ export default async function handler(req, res) {
         // que Stripe copia a la propia suscripción, no a la sesión.
         const sub = await stripe.subscriptions.retrieve(session.subscription);
         const m = sub.metadata || {};
-        crearSuscripcionPagada({
+        await crearSuscripcionPagada({
           stripeSubscriptionId: sub.id,
           email: m.email,
           type: m.sub_type,
@@ -84,7 +84,7 @@ export default async function handler(req, res) {
     const invoice = event.data.object;
     if (invoice.billing_reason === "subscription_cycle" && invoice.subscription) {
       try {
-        registrarRenovacionMensual({
+        await registrarRenovacionMensual({
           stripeSubscriptionId: invoice.subscription,
           amountCents: invoice.amount_paid,
         });
@@ -97,13 +97,13 @@ export default async function handler(req, res) {
 
   if (event.type === "customer.subscription.deleted") {
     const sub = event.data.object;
-    marcarEstadoSuscripcion({ stripeSubscriptionId: sub.id, status: "cancelada" });
+    await marcarEstadoSuscripcion({ stripeSubscriptionId: sub.id, status: "cancelada" });
   }
 
   if (event.type === "invoice.payment_failed") {
     const invoice = event.data.object;
     if (invoice.subscription) {
-      marcarEstadoSuscripcion({ stripeSubscriptionId: invoice.subscription, status: "impago" });
+      await marcarEstadoSuscripcion({ stripeSubscriptionId: invoice.subscription, status: "impago" });
     }
   }
 
