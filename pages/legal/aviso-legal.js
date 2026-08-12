@@ -8,14 +8,7 @@ export default function AvisoLegal() {
       <Head><title>Aviso legal — ReviewVault</title></Head>
       <Nav />
       <LegalLayout title="Aviso legal">
-        <p className="rounded-lg bg-amber-50 px-4 py-3 text-xs text-amber-700">
-          Datos reales de la empresa. Ten en cuenta que al ser una entidad
-          "LTD" (Reino Unido) operando en España, conviene que un gestor
-          confirme que las referencias legales de este documento (LSSI-CE,
-          normativa española de consumidores) siguen siendo las correctas
-          para tu caso, o si hay que añadir algo específico de jurisdicción
-          cruzada.
-        </p>
+      
 
         <h2>1. Datos del titular</h2>
         <p>

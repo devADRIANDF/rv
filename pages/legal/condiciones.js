@@ -8,12 +8,7 @@ export default function Condiciones() {
       <Head><title>Condiciones de venta — ReviewVault</title></Head>
       <Nav />
       <LegalLayout title="Condiciones de venta">
-        <p className="rounded-lg bg-amber-50 px-4 py-3 text-xs text-amber-700">
-          Datos reales de la empresa. Revisa especialmente el tratamiento de
-          IVA (una "LTD" británica vendiendo a consumidores en España tiene
-          reglas propias de IVA/OSS) con tu gestor antes de publicar.
-        </p>
-
+        
         <h2>1. Objeto</h2>
         <p>
           Estas condiciones regulan la compra de cuentas con reviews y de
@@ -31,7 +26,7 @@ export default function Condiciones() {
 
         <h2>3. Plazos de entrega</h2>
         <ul>
-          <li>Cuentas ya montadas: se preparan bajo pedido, con un plazo de entrega de hasta 2 semanas</li>
+          <li>Cuentas ya montadas: se preparan bajo pedido, con un plazo de entrega de hasta 4 semanas</li>
           <li>Reviews sobre tu propia cuenta: recibirás instrucciones por email, normalmente en menos de 24 horas</li>
           <li>Suscripciones: la primera entrega sigue los plazos anteriores; las renovaciones mensuales se gestionan a lo largo de cada mes</li>
         </ul>

@@ -81,7 +81,7 @@ export default function Producto() {
               </span>
               <div>
                 <p className="font-display text-base font-600 text-ink">Cuenta · {tier.n} reviews</p>
-                <p className="text-xs text-mist">Entrega en un plazo máximo de 2 semanas</p>
+                <p className="text-xs text-mist">Entrega en un plazo máximo de 4 semanas</p>
               </div>
             </div>
 
@@ -171,7 +171,7 @@ export default function Producto() {
             </button>
             <p className="mt-3 rounded-lg bg-amber-50 px-3 py-2 text-center text-xs text-amber-700">
               Esta cuenta se prepara bajo pedido: la entrega puede tardar
-              hasta 2 semanas.
+              hasta 4 semanas.
             </p>
             <p className="mt-2 text-center text-xs text-mist">No hace falta crear cuenta para comprar</p>
             {status === "cargando" && <p className="mt-3 text-center text-xs text-mist">Procesando…</p>}

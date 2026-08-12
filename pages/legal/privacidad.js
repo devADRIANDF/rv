@@ -8,11 +8,7 @@ export default function Privacidad() {
       <Head><title>Política de privacidad — ReviewVault</title></Head>
       <Nav />
       <LegalLayout title="Política de privacidad">
-        <p className="rounded-lg bg-amber-50 px-4 py-3 text-xs text-amber-700">
-          Datos reales de la empresa. Revisa con un gestor si al ser una
-          entidad "LTD" hay alguna particularidad de protección de datos
-          transfronteriza que debas añadir aquí.
-        </p>
+   
 
         <h2>1. Responsable del tratamiento</h2>
         <ul>
