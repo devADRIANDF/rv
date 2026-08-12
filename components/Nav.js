@@ -22,7 +22,7 @@ export default function Nav() {
             <Link href="/producto" className="text-sm font-500 text-ink hover:text-teal">Cuentas</Link>
             <Link href="/reviews-a-tu-id" className="text-sm font-500 text-ink hover:text-teal">A tu ID</Link>
             <Link href="/ayuda" className="text-sm font-500 text-ink hover:text-teal">Ayuda</Link>
-            <a href="https://t.me/tu_usuario" target="_blank" rel="noopener noreferrer" className="text-sm font-500 text-ink hover:text-teal">
+            <a href="https://t.me/REVIEW_VAULT" target="_blank" rel="noopener noreferrer" className="text-sm font-500 text-ink hover:text-teal">
               Telegram
             </a>
           </nav>

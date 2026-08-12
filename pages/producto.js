@@ -170,8 +170,7 @@ export default function Producto() {
                 : `Empezar por ${(tier.price / 100).toFixed(2)} € + ${(totalMensual / 100).toFixed(2)} €/mes`}
             </button>
             <p className="mt-3 rounded-lg bg-amber-50 px-3 py-2 text-center text-xs text-amber-700">
-              Esta cuenta se prepara bajo pedido: la entrega puede tardar
-              hasta 4 semanas.
+              Esta cuenta se prepara bajo pedido.
             </p>
             <p className="mt-2 text-center text-xs text-mist">No hace falta crear cuenta para comprar</p>
             {status === "cargando" && <p className="mt-3 text-center text-xs text-mist">Procesando…</p>}
