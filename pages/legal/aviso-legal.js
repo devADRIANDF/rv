@@ -9,8 +9,12 @@ export default function AvisoLegal() {
       <Nav />
       <LegalLayout title="Aviso legal">
         <p className="rounded-lg bg-amber-50 px-4 py-3 text-xs text-amber-700">
-          Plantilla de borrador. Rellena los huecos marcados con tus datos
-          reales antes de publicar, y haz que un gestor o abogado lo revise.
+          Datos reales de la empresa. Ten en cuenta que al ser una entidad
+          "LTD" (Reino Unido) operando en España, conviene que un gestor
+          confirme que las referencias legales de este documento (LSSI-CE,
+          normativa española de consumidores) siguen siendo las correctas
+          para tu caso, o si hay que añadir algo específico de jurisdicción
+          cruzada.
         </p>
 
         <h2>1. Datos del titular</h2>
@@ -20,11 +24,11 @@ export default function AvisoLegal() {
           informa de los siguientes datos:
         </p>
         <ul>
-          <li>Titular: <strong>[TU NOMBRE COMPLETO O RAZÓN SOCIAL]</strong></li>
-          <li>NIF/CIF: <strong>[TU NIF O CIF]</strong></li>
-          <li>Domicilio: <strong>[TU DIRECCIÓN FISCAL]</strong></li>
-          <li>Email de contacto: <strong>[TU EMAIL]</strong></li>
-          <li>Sitio web: <strong>[TU DOMINIO]</strong></li>
+          <li>Titular: <strong>REVIEW VAULT LTD</strong></li>
+          <li>CIF: <strong>H42432633</strong></li>
+          <li>Domicilio: <strong>Calle Alameda 68, 28080</strong></li>
+          <li>Contacto (Telegram): <strong>t.me/REVIEW_VAULT</strong></li>
+          <li>Sitio web: <strong>reviewvault.es</strong></li>
         </ul>
 
         <h2>2. Objeto</h2>
@@ -44,7 +48,7 @@ export default function AvisoLegal() {
         <h2>4. Propiedad intelectual e industrial</h2>
         <p>
           Los contenidos de este sitio web (textos, diseño, logotipos) son
-          titularidad de <strong>[TU NOMBRE O RAZÓN SOCIAL]</strong> o de
+          titularidad de <strong>REVIEW VAULT LTD</strong> o de
           terceros que han autorizado su uso, y están protegidos por la
           normativa de propiedad intelectual e industrial.
         </p>

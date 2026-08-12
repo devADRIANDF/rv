@@ -9,15 +9,16 @@ export default function Privacidad() {
       <Nav />
       <LegalLayout title="Política de privacidad">
         <p className="rounded-lg bg-amber-50 px-4 py-3 text-xs text-amber-700">
-          Plantilla de borrador. Rellena los huecos marcados con tus datos
-          reales antes de publicar, y haz que un gestor o abogado lo revise.
+          Datos reales de la empresa. Revisa con un gestor si al ser una
+          entidad "LTD" hay alguna particularidad de protección de datos
+          transfronteriza que debas añadir aquí.
         </p>
 
         <h2>1. Responsable del tratamiento</h2>
         <ul>
-          <li>Responsable: <strong>[TU NOMBRE COMPLETO O RAZÓN SOCIAL]</strong></li>
-          <li>NIF/CIF: <strong>[TU NIF O CIF]</strong></li>
-          <li>Contacto: <strong>[TU EMAIL]</strong></li>
+          <li>Responsable: <strong>REVIEW VAULT LTD</strong></li>
+          <li>NIF/CIF: <strong>H42432633</strong></li>
+          <li>Contacto (Telegram): <strong>t.me/REVIEW_VAULT</strong></li>
         </ul>
 
         <h2>2. Datos que recogemos</h2>
@@ -61,8 +62,8 @@ export default function Privacidad() {
         <h2>7. Tus derechos</h2>
         <p>
           Puedes ejercer tus derechos de acceso, rectificación, supresión,
-          oposición, limitación y portabilidad escribiendo a{" "}
-          <strong>[TU EMAIL]</strong>. También puedes reclamar ante la
+          oposición, limitación y portabilidad escribiéndonos por Telegram a{" "}
+          <strong>t.me/REVIEW_VAULT</strong>. También puedes reclamar ante la
           Agencia Española de Protección de Datos (aepd.es).
         </p>
 

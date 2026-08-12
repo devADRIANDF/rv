@@ -9,17 +9,17 @@ export default function Condiciones() {
       <Nav />
       <LegalLayout title="Condiciones de venta">
         <p className="rounded-lg bg-amber-50 px-4 py-3 text-xs text-amber-700">
-          Plantilla de borrador. Revisa especialmente el tratamiento de IVA
-          (según vendas como particular o como profesional) con tu gestor
-          antes de publicar.
+          Datos reales de la empresa. Revisa especialmente el tratamiento de
+          IVA (una "LTD" británica vendiendo a consumidores en España tiene
+          reglas propias de IVA/OSS) con tu gestor antes de publicar.
         </p>
 
         <h2>1. Objeto</h2>
         <p>
           Estas condiciones regulan la compra de cuentas con reviews y de
           paquetes de reviews aplicados a cuentas propias, a través de
-          <strong> [TU DOMINIO]</strong>, operado por{" "}
-          <strong>[TU NOMBRE O RAZÓN SOCIAL]</strong>.
+          <strong> reviewvault.es</strong>, operado por{" "}
+          <strong>REVIEW VAULT LTD</strong>.
         </p>
 
         <h2>2. Precio y pago</h2>
@@ -67,8 +67,8 @@ export default function Condiciones() {
 
         <h2>7. Reclamaciones</h2>
         <p>
-          Para cualquier incidencia con tu pedido, contacta a{" "}
-          <strong>[TU EMAIL]</strong> o por Telegram. Como consumidor,
+          Para cualquier incidencia con tu pedido, contacta por Telegram a{" "}
+          <strong>t.me/REVIEW_VAULT</strong>. Como consumidor,
           también dispones de las hojas de reclamaciones oficiales y de la
           plataforma europea de resolución de litigios en línea
           (ec.europa.eu/consumers/odr).
