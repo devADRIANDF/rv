@@ -1,5 +1,6 @@
 import { dbGet, dbRun } from "../../../lib/db";
 import { getUserIdFromReq } from "../../../lib/auth";
+import { acreditarComision } from "../../../lib/comision";
 
 const PRECIOS = { 5: 5000, 10: 9000, 15: 12500, 20: 16000 };
 const PRECIO_EXTRA = 900;
@@ -7,12 +8,7 @@ const PRECIO_EXTRA = 900;
 async function registrarComision(orderId, buyerId, amountCents) {
   const buyer = await dbGet("SELECT referred_by FROM users WHERE id = ?", [buyerId]);
   if (!buyer || !buyer.referred_by) return;
-  const comision = Math.round(amountCents * 0.1);
-  await dbRun(
-    "INSERT INTO referral_earnings (affiliate_id, from_user_id, order_id, amount_cents) VALUES (?, ?, ?, ?)",
-    [buyer.referred_by, buyerId, orderId, comision]
-  );
-  await dbRun("UPDATE users SET wallet_balance = wallet_balance + ? WHERE id = ?", [comision, buyer.referred_by]);
+  await acreditarComision({ affiliateId: buyer.referred_by, orderId, amountCents, fromUserId: buyerId });
 }
 
 export default async function handler(req, res) {

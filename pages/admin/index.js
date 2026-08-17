@@ -244,6 +244,7 @@ export default function Admin() {
                     <th className="px-4 py-3">Saldo</th>
                     <th className="px-4 py-3">Referidos</th>
                     <th className="px-4 py-3">Comisiones ganadas</th>
+                    <th className="px-4 py-3">% Comisión</th>
                     <th className="px-4 py-3">Alta</th>
                   </tr>
                 </thead>
@@ -255,11 +256,14 @@ export default function Admin() {
                       <td className="px-4 py-3 text-ink">{((u.wallet_balance || 0) / 100).toFixed(2)} €</td>
                       <td className="px-4 py-3 text-ink">{u.referidos || 0}</td>
                       <td className="px-4 py-3 text-ink">{((u.comisiones_cents || 0) / 100).toFixed(2)} €</td>
+                      <td className="px-4 py-3">
+                        <ComisionInput usuario={u} onGuardado={cargarTodo} />
+                      </td>
                       <td className="px-4 py-3 text-xs text-mist">{u.created_at ? new Date(u.created_at).toLocaleDateString("es-ES") : "—"}</td>
                     </tr>
                   ))}
                   {users.length === 0 && (
-                    <tr><td colSpan={6} className="px-4 py-8 text-center text-mist">Aún no hay usuarios registrados.</td></tr>
+                    <tr><td colSpan={7} className="px-4 py-8 text-center text-mist">Aún no hay usuarios registrados.</td></tr>
                   )}
                 </tbody>
               </table>
@@ -276,6 +280,55 @@ function Stat({ label, value, highlight }) {
     <div className={`rounded-2xl border p-4 ${highlight ? "border-amber-300 bg-amber-50" : "border-line bg-surface"}`}>
       <p className="text-xs font-500 text-mist">{label}</p>
       <p className="mt-1 font-display text-xl font-700 text-ink">{value}</p>
+    </div>
+  );
+}
+
+function ComisionInput({ usuario, onGuardado }) {
+  const [valor, setValor] = useState(
+    usuario.commission_rate !== null && usuario.commission_rate !== undefined
+      ? String(usuario.commission_rate)
+      : ""
+  );
+  const [estado, setEstado] = useState(null); // null | "guardando" | "ok" | "error"
+
+  async function guardar() {
+    setEstado("guardando");
+    const r = await fetch("/api/admin/users", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: usuario.id, commission_rate: valor === "" ? null : valor }),
+    });
+    if (r.ok) {
+      setEstado("ok");
+      onGuardado();
+      setTimeout(() => setEstado(null), 1500);
+    } else {
+      setEstado("error");
+    }
+  }
+
+  return (
+    <div className="flex items-center gap-2">
+      <input
+        type="number"
+        min={0}
+        max={100}
+        step="0.1"
+        value={valor}
+        onChange={(e) => setValor(e.target.value)}
+        placeholder="10 (def.)"
+        className="w-20 rounded-lg border border-line bg-page px-2 py-1 text-xs text-ink outline-none focus:border-teal"
+      />
+      <span className="text-xs text-mist">%</span>
+      <button
+        onClick={guardar}
+        disabled={estado === "guardando"}
+        className="rounded-full border border-line px-2 py-1 text-[11px] font-500 text-ink hover:border-teal hover:text-teal disabled:opacity-50"
+      >
+        {estado === "guardando" ? "..." : estado === "ok" ? "✓" : "Guardar"}
+      </button>
+      {estado === "error" && <span className="text-[11px] text-coral">Error</span>}
     </div>
   );
 }
