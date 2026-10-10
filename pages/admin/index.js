@@ -245,6 +245,7 @@ export default function Admin() {
                     <th className="px-4 py-3">Referidos</th>
                     <th className="px-4 py-3">Comisiones ganadas</th>
                     <th className="px-4 py-3">% Comisión</th>
+                    <th className="px-4 py-3">Contraseña</th>
                     <th className="px-4 py-3">Alta</th>
                   </tr>
                 </thead>
@@ -259,11 +260,14 @@ export default function Admin() {
                       <td className="px-4 py-3">
                         <ComisionInput usuario={u} onGuardado={cargarTodo} />
                       </td>
+                      <td className="px-4 py-3">
+                        <ResetPassword usuario={u} />
+                      </td>
                       <td className="px-4 py-3 text-xs text-mist">{u.created_at ? new Date(u.created_at).toLocaleDateString("es-ES") : "—"}</td>
                     </tr>
                   ))}
                   {users.length === 0 && (
-                    <tr><td colSpan={7} className="px-4 py-8 text-center text-mist">Aún no hay usuarios registrados.</td></tr>
+                    <tr><td colSpan={8} className="px-4 py-8 text-center text-mist">Aún no hay usuarios registrados.</td></tr>
                   )}
                 </tbody>
               </table>
@@ -280,6 +284,51 @@ function Stat({ label, value, highlight }) {
     <div className={`rounded-2xl border p-4 ${highlight ? "border-amber-300 bg-amber-50" : "border-line bg-surface"}`}>
       <p className="text-xs font-500 text-mist">{label}</p>
       <p className="mt-1 font-display text-xl font-700 text-ink">{value}</p>
+    </div>
+  );
+}
+
+function ResetPassword({ usuario }) {
+  const [abierto, setAbierto] = useState(false);
+  const [pw, setPw] = useState("");
+  const [estado, setEstado] = useState(null);
+
+  async function guardar() {
+    if (pw.length < 6) return setEstado("corta");
+    setEstado("guardando");
+    const r = await fetch("/api/admin/users", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: usuario.id, new_password: pw }),
+    });
+    if (r.ok) {
+      setEstado("ok");
+      setPw("");
+      setTimeout(() => { setEstado(null); setAbierto(false); }, 2500);
+    } else setEstado("error");
+  }
+
+  if (!abierto) {
+    return (
+      <button onClick={() => setAbierto(true)} className="rounded-full border border-line px-2 py-1 text-[11px] font-500 text-ink hover:border-ink">
+        Restablecer
+      </button>
+    );
+  }
+  return (
+    <div className="flex items-center gap-2">
+      <input
+        type="text"
+        value={pw}
+        onChange={(e) => setPw(e.target.value)}
+        placeholder="Nueva contraseña"
+        className="w-36 rounded-lg border border-line bg-page px-2 py-1 text-xs text-ink outline-none focus:border-ink"
+      />
+      <button onClick={guardar} disabled={estado === "guardando"} className="rounded-full border border-line px-2 py-1 text-[11px] font-500 text-ink hover:border-ink disabled:opacity-50">
+        {estado === "guardando" ? "..." : estado === "ok" ? "✓ Cambiada" : "Guardar"}
+      </button>
+      {estado === "corta" && <span className="text-[11px] text-red-600">Mín. 6</span>}
+      {estado === "error" && <span className="text-[11px] text-red-600">Error</span>}
     </div>
   );
 }

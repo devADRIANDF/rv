@@ -176,6 +176,8 @@ export default function Panel() {
             </div>
           </div>
 
+          <CambiarPassword />
+
           <button
             onClick={async () => {
               await fetch("/api/auth/logout", { method: "POST" });
@@ -188,5 +190,44 @@ export default function Panel() {
         </div>
       </main>
     </>
+  );
+}
+function CambiarPassword() {
+  const [actual, setActual] = useState("");
+  const [nueva, setNueva] = useState("");
+  const [msg, setMsg] = useState(null); // { ok, texto }
+
+  async function onSubmit(e) {
+    e.preventDefault();
+    setMsg(null);
+    const r = await fetch("/api/auth/cambiar-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ current_password: actual, new_password: nueva }),
+    });
+    const data = await r.json().catch(() => ({}));
+    if (r.ok) {
+      setMsg({ ok: true, texto: "Contraseña actualizada." });
+      setActual("");
+      setNueva("");
+    } else {
+      setMsg({ ok: false, texto: data.error || "No se pudo cambiar la contraseña." });
+    }
+  }
+
+  return (
+    <div className="mt-8">
+      <p className="text-xs font-600 uppercase tracking-wide text-mist">Cambiar contraseña</p>
+      <form onSubmit={onSubmit} className="mt-3 grid gap-3 rounded-2xl border border-line bg-surface p-5 sm:grid-cols-3">
+        <input type="password" value={actual} onChange={(e) => setActual(e.target.value)} required placeholder="Contraseña actual"
+          className="rounded-xl border border-line bg-page px-4 py-2.5 text-sm text-ink outline-none focus:border-ink" />
+        <input type="password" value={nueva} onChange={(e) => setNueva(e.target.value)} required minLength={6} placeholder="Nueva contraseña (mín. 6)"
+          className="rounded-xl border border-line bg-page px-4 py-2.5 text-sm text-ink outline-none focus:border-ink" />
+        <button type="submit" className="rounded-full border border-line px-4 py-2.5 text-sm font-600 text-ink hover:border-ink">
+          Guardar contraseña
+        </button>
+        {msg && <p className={`text-xs sm:col-span-3 ${msg.ok ? "text-ink" : "text-red-600"}`}>{msg.texto}</p>}
+      </form>
+    </div>
   );
 }
